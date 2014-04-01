@@ -1,0 +1,48 @@
+CREATE TABLE test1 (a int, b text);
+CREATE TABLE test2 (a int, b text);
+DROP TABLE test1;
+\dt public.*
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | test2 | table | postgres
+(1 row)
+
+\dt "Trash".*
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ Trash  | test1 | table | postgres
+(1 row)
+
+DROP TABLE test2;
+\dt public.*
+      List of relations
+ Schema | Name | Type | Owner 
+--------+------+------+-------
+(0 rows)
+
+\dt "Trash".*
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ Trash  | test1 | table | postgres
+ Trash  | test2 | table | postgres
+(2 rows)
+
+DROP TABLE "Trash".test1;
+\dt "Trash".*
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ Trash  | test2 | table | postgres
+(1 row)
+
+DROP SCHEMA "Trash" CASCADE;
+NOTICE:  drop cascades to table "Trash".test2
+\dn *rash*
+List of schemas
+ Name | Owner 
+------+-------
+(0 rows)
+
